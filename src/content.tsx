@@ -3,7 +3,8 @@ import { motion } from "framer-motion"
 import type { PlasmoCSConfig } from "plasmo"
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://leetcode.com/*"]
+  matches: ["https://leetcode.com/*"],
+  world: "MAIN"
 }
 
 export const getStyle = () => {
@@ -12,15 +13,23 @@ export const getStyle = () => {
   return style
 }
 
+const waitForMonaco = new Promise<void>((resolve) => {
+  const checkMonaco = () => {
+    if (window.monaco) resolve()
+    else setTimeout(checkMonaco, 100)
+  }
+  checkMonaco()
+})
+
 const PlasmoOverlay = () => {
+  const insertCode = async () => {
+    await waitForMonaco
+    const code = window.monaco.editor.getModels()
+    if (code.length > 0) code[0].setValue("f* yeah!")
+  }
+
   return (
-    <div
-      onClick={() => {
-        // chrome.runtime.sendMessage({ action: ACTIONS.OPEN_REGISTER })
-        // const code = monaco.editor.getModels()
-        // code[0].setValue("this")
-      }}
-      className="z-50 group flex fixed right-0 top-32">
+    <div onClick={insertCode} className="z-50 group flex fixed right-0 top-32">
       <div className="invisible group-hover:visible">
         {/* tooltip */}
         <motion.div
