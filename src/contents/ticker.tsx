@@ -25,7 +25,23 @@ const PlasmoOverlay = () => {
   const insertCode = async () => {
     await waitForMonaco
     const code = window.monaco.editor.getModels()
-    if (code.length > 0) code[0].setValue("f* yeah!")
+    const editor = code[0]
+    if (code.length > 0) {
+      const snippet = `
+      /**
+ * @param {number[][]} matrix
+ * @return {number}
+ */
+var maxMatrixSum = function(matrix) {
+console.log("maxMatrixSum")
+};
+      `
+      console.log("code: ", editor.getValue())
+      editor.setValue(snippet)
+
+      const instance = window.monaco.editor.getEditors()[0]
+      instance.trigger("keyboard", "editor.action.formatDocument", {})
+    }
   }
 
   return (
