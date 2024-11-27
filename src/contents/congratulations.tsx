@@ -26,7 +26,7 @@ type Config = {
   next_problem: string
 }
 
-const PlasmoOverlay = () => {
+const Congratulations = () => {
   const [config, setConfig] = useState<Config>({
     text_content: "let's f*cking gooo!",
     problems_solved_today: 2,
@@ -36,8 +36,16 @@ const PlasmoOverlay = () => {
   })
 
   return (
-    <motion.div>
-      <div className="space-y-2 -rotate-2 p-2 border-dashed border-2 backdrop-blur-sm border-white/20 rounded-[2rem] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <div className="space-y-2 -rotate-2 p-2 border-dashed border-2 backdrop-blur-sm border-white/20 rounded-[2rem] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 380,
+          damping: 15,
+          duration: 0.5
+        }}>
         <div className="flex gap-1">
           <div className="relative">
             <div className="p-2 bg-white w-fit rounded-3xl">
@@ -97,9 +105,9 @@ const PlasmoOverlay = () => {
             </div>
           </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   )
 }
 
-export default PlasmoOverlay
+export default Congratulations
